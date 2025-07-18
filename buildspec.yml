@@ -1,0 +1,42 @@
+version: 0.2
+
+env:
+  variables:
+    # Tên file JAR đầu ra
+    JAR_FILE: "app.jar"
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto17
+    commands:
+      - echo "Install phase: nothing to install"
+
+  pre_build:
+    commands:
+      - echo "Pre-build phase: clean project"
+      - mvn clean
+
+  build:
+    commands:
+      - echo "Build phase: compile & package"
+      - mvn package -DskipTests
+      - echo "Renaming artifact to $JAR_FILE"
+      - cp target/*.jar $JAR_FILE
+
+  post_build:
+    commands:
+      - echo "Post-build phase: listing files"
+      - ls -l
+
+artifacts:
+  # Những file sẽ được đẩy lên S3 để CodeDeploy hoặc bước tiếp theo trong pipeline sử dụng
+  files:
+    - $JAR_FILE
+    - appspec.yml
+    - scripts/**/*
+  discard-paths: yes
+
+cache:
+  paths:
+    - ~/.m2/repository/**/*
