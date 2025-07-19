@@ -20,11 +20,6 @@ phases:
       - mvn package -DskipTests
       - echo "Renaming output JAR to $JAR_FILE"
       - cp target/*.jar $JAR_FILE
-  post_build:
-    commands:
-      - echo "Post-build phase: listing files"
-      - ls -l
-      - echo "Build completed on `date`"
 artifacts:
   files:
     - $JAR_FILE
