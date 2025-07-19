@@ -30,7 +30,6 @@ phases:
       - ls -l
 
 artifacts:
-  # Những file sẽ được đẩy lên S3 để CodeDeploy hoặc bước tiếp theo trong pipeline sử dụng
   files:
     - $JAR_FILE
     - appspec.yml
@@ -39,4 +38,4 @@ artifacts:
 
 cache:
   paths:
-    - ~/.m2/repository/**/*
+    - "**/repository/**/*"
