@@ -12,23 +12,19 @@ phases:
       - echo "Install phase: installing Maven"
       - apt-get update -y
       - apt-get install -y maven
-
   pre_build:
     commands:
       - echo "Pre-build phase: cleaning project"
       - mvn clean
-
   build:
     commands:
       - echo "Build phase: building the application"
       - mvn package -DskipTests
       - echo "Renaming output JAR to $JAR_FILE"
       - cp target/*.jar $JAR_FILE
-
   post_build:
     commands:
       - echo "Post-build phase: listing files"
-      - ls -l
       - echo "Build completed on `date`"
 
 artifacts:
