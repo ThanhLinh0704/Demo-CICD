@@ -1,6 +1,18 @@
 version: 0.2
 
+env:
+  variables:
+    JAR_FILE: "app.jar"
+
 phases:
   install:
+    runtime-versions:
+      java: corretto17
     commands:
-      - echo "Hello from CodeBuild!"
+      - echo "Install phase: installing Maven"
+      - apt-get update -y
+      - apt-get install -y maven
+  pre_build:
+    commands:
+      - echo "Pre-build phase: cleaning project"
+      - mvn clean
